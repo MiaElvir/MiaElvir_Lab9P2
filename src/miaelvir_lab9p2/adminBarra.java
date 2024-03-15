@@ -4,7 +4,12 @@
  */
 package miaelvir_lab9p2;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import javax.swing.JFileChooser;
 import javax.swing.JProgressBar;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -14,11 +19,16 @@ public class adminBarra extends Thread{
     protected JProgressBar barra; 
     protected boolean vive; 
     protected boolean avanza; 
+    protected File archivo;
+    protected JTextArea area; 
+    
 
-    public adminBarra(JProgressBar barra) {
+    public adminBarra(JProgressBar barra, File archivo, JTextArea a) {
         this.barra = barra;
         this.vive = true; 
         this.avanza = true; 
+        this.archivo = archivo;
+        this.area = a; 
     }
 
     public JProgressBar getBarra() {
@@ -57,10 +67,32 @@ public class adminBarra extends Thread{
                     System.out.println(isVive());
                 }  
                 try {
-                    Thread.sleep(80);
+                    Thread.sleep(40);
                 } catch (InterruptedException ex) {
                 }
             
+        }
+        String area = ""; 
+        if (vive == false) {
+            
+                            
+                FileReader fr = null; 
+                BufferedReader br = null; 
+                try {
+                    fr = new FileReader(archivo);
+                    br = new BufferedReader(fr);
+                    String temp = ""; 
+                    while ((temp = br.readLine()) != null) {                        
+                        area+=temp;
+                        area+="\n";
+                    }
+                    this.area.setText(area);
+                    
+                } catch (Exception e) {
+                }
+            
+     
+
         }
         
         

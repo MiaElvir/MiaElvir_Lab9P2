@@ -190,32 +190,10 @@ public class Cloud extends javax.swing.JFrame {
         jf.setFileFilter(filtro);
         int op = jf.showOpenDialog(this);
         archivo = jf.getSelectedFile(); 
-        adminBarra barra = new adminBarra(jpb_barra);
+        adminBarra barra = new adminBarra(jpb_barra, archivo, jt_archivo);
         //barra.start();
         barra.run();
-        String area = ""; 
-        if (barra.isVive() == false) {
-            
-            if (op == JFileChooser.APPROVE_OPTION) {
-                
-                FileReader fr = null; 
-                BufferedReader br = null; 
-                try {
-                    fr = new FileReader(archivo);
-                    br = new BufferedReader(fr);
-                    String temp = ""; 
-                    while ((temp = br.readLine()) != null) {                        
-                        area+=temp;
-                        area+="\n";
-                    }
-                    jt_archivo.setText(area);
-                    
-                } catch (Exception e) {
-                }
-            }
-     
-
-        }
+        
         
         
         
