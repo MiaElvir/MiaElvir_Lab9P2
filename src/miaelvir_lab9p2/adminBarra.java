@@ -57,7 +57,7 @@ public class adminBarra extends Thread{
                     System.out.println(isVive());
                 }  
                 try {
-                    Thread.sleep(60);
+                    Thread.sleep(80);
                 } catch (InterruptedException ex) {
                 }
             

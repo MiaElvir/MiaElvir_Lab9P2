@@ -4,7 +4,14 @@
  */
 package miaelvir_lab9p2;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -156,6 +163,11 @@ public class Cloud extends javax.swing.JFrame {
 
         jb_guardar.setBackground(new java.awt.Color(255, 153, 153));
         jb_guardar.setText("Guardar");
+        jb_guardar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_guardarMouseClicked(evt);
+            }
+        });
         jPanel1.add(jb_guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 450, 120, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -177,12 +189,29 @@ public class Cloud extends javax.swing.JFrame {
         FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos de texto", "txt");
         jf.setFileFilter(filtro);
         int op = jf.showOpenDialog(this);
-        File archivo = jf.getSelectedFile(); 
+        archivo = jf.getSelectedFile(); 
         adminBarra barra = new adminBarra(jpb_barra);
-        barra.start();
+        //barra.start();
+        barra.run();
+        String area = ""; 
         if (barra.isVive() == false) {
+            
             if (op == JFileChooser.APPROVE_OPTION) {
-                System.out.println("si");
+                
+                FileReader fr = null; 
+                BufferedReader br = null; 
+                try {
+                    fr = new FileReader(archivo);
+                    br = new BufferedReader(fr);
+                    String temp = ""; 
+                    while ((temp = br.readLine()) != null) {                        
+                        area+=temp;
+                        area+="\n";
+                    }
+                    jt_archivo.setText(area);
+                    
+                } catch (Exception e) {
+                }
             }
      
 
@@ -193,6 +222,35 @@ public class Cloud extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_jb_subirArchivoMouseClicked
+
+    private void jb_guardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_guardarMouseClicked
+       
+        System.out.println(jt_archivo.getText());
+        FileWriter fw;
+        BufferedWriter bw; 
+        try {
+            System.out.println(jt_archivo.getText());
+            fw = new FileWriter(archivo, false);
+            fw.close();
+            try {
+                fw = new FileWriter(archivo);
+                bw = new BufferedWriter(fw);
+                bw.write(jt_archivo.getText());
+                bw.flush();
+                bw.close();
+                fw.close();
+                
+            } catch (Exception e) {
+            }
+        } catch (IOException ex) {
+           
+        }
+        
+        jt_archivo.setText("");
+        jpb_barra.setValue(0);
+        
+        
+    }//GEN-LAST:event_jb_guardarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -248,4 +306,7 @@ public class Cloud extends javax.swing.JFrame {
     private javax.swing.JProgressBar jpb_barra;
     private javax.swing.JTextArea jt_archivo;
     // End of variables declaration//GEN-END:variables
+    protected File archivo; 
+
+
 }
